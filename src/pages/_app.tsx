@@ -1,16 +1,18 @@
-import React from 'react';
-import type { AppProps } from 'next/app';
-import Layout from '../components/Layout';
-import '../../styles/globals.css';
+import type { AppProps } from "next/app";
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
-  return (
-    <div className="header-fix fix-sidebar">
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </div>
-  );
+import React from "react";
+import "../../styles/globals.css";
+import * as Layouts from "../components/Layouts";
+
+import type { Page } from "../types/page";
+
+// this should give a better typing
+type Props = AppProps & {
+  Component: Page;
+};
+const MyApp = ({ Component, pageProps }: Props) => {
+  const Layout = Component.layout ?? Layouts.DefaultLayout;
+  return <Layout>{<Component {...pageProps} />}</Layout>;
 };
 
 export default MyApp;
